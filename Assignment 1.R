@@ -1,9 +1,12 @@
 # Cmpt 318 Assignment 1
-# Rajbir Bains
+# Rajbir Singh Bains
+# Sukhwinder Singh
+# Tej Singh Pooni
 
-datacollected = read.table("Group_Assignment_1_Dataset.txt", header = TRUE, sep = ",")
-dcollectedg7 = read.table("Group_7_Dataset_A1.txt", header = TRUE, sep = ",")
 
+#datacollected = read.table("Group_Assignment_1_Dataset.txt", header = TRUE, sep = ",")
+
+dcollectedg7 = read.table("Group_7_Dataset_A1.txt", header = TRUE, sep = ",") #Accessing data
 
 data_cols = as.POSIXlt(dcollectedg7$Date, format = "%d/%m/%Y")
 
@@ -13,6 +16,7 @@ meanA = mean(dcollectedg7$Global_active_power)
 meanB = mean(dcollectedg7$Global_reactive_power)
 meanC = mean(dcollectedg7$Voltage)
 
+
 print("Arithmetic Mean")
 print(meanA)
 print(meanB)
@@ -20,40 +24,16 @@ print(meanC)
 
 
 # Geometric mean calculations 
-sumGap = 1;
-counter = 0
-for(x in dcollectedg7$Global_active_power){
-  sumGap = sumGap * x
-  counter = counter + 1
-}
 
+gmeanA = geoMean(dcollectedg7$Global_active_power)
+gmeanB = geoMean(dcollectedg7$Global_reactive_power) #Value should be zero but is giving NA
+gmeanC = geoMean(dcollectedg7$Voltage)
 
-gmeanA = sumGap**(1/counter)
-
-sumGrp = 1
-counter = 0
-for(x in dcollectedg7$Global_reactive_power){
-  sumGrp = sumGrp * x
-  counter = counter + 1
-}
-
-
-gmeanB = sumGrp**(1/counter)
-
-sumV = 1
-counter = 0
-
-for(x in dcollectedg7$Voltage){
-  sumV = sumV * x
-  counter = counter + 1
-}
-
-
-gmeanC = sumV^(1/counter)
 
 print("Geometric Mean")
+
 print(gmeanA)
-print(gmeanB)
+print(gmeanB) # Assume value is 0 but function gives NA
 print(gmeanC)
 
 
@@ -68,17 +48,12 @@ print(sdB)
 print(sdC)
 
 
-for(x in dcollectedg7$Time){
-  if(x  == "00:04:00"){
-    print("It works")
-  }
-}
 
 
-
+# TIME DEFINITION
 #Day -> 6AM - 6PM
 #Night -> 6PM - 6AM
-# ASK ABOUT WEEK START (MONDAY OR SUNDAY?)
+#"12/2/2007" is Monday start
 
 # 
 # 05:59:00 #Night
@@ -91,32 +66,30 @@ for(x in dcollectedg7$Time){
 
 
 
-#"12/2/2007" is Monday start
-#Max around 6.01 Min around 0.2
 print("FOR A (Global_active_power)")
+
 weekendmaxAday = 0
 weekendmaxAnight = 0
 daycounter = 7200
-isDay = FALSE
+isDay = FALSE #Night time
 for(x in dcollectedg7$Date){
-  if(x == "17/2/2007" || x == "18/2/2007" ){
+  if(x == "17/2/2007" || x == "18/2/2007"){ # Checks if it is the weekend
     daycounter = daycounter + 1
-    
-    if(dcollectedg7$Time[daycounter] == "06:00:00"){
+    if(dcollectedg7$Time[daycounter] == "06:00:00"){ # Checks if it is day or night
       isDay = TRUE
     }else if(dcollectedg7$Time[daycounter] == "18:00:00"){
       isDay = FALSE
     }
-    if(isDay == FALSE){
+    if(isDay == FALSE){ # night time
       
       if(weekendmaxAnight < dcollectedg7$Global_active_power[daycounter]){
-        weekendmaxAnight = max(weekendmaxAnight,dcollectedg7$Global_active_power[daycounter])
+        weekendmaxAnight = max(weekendmaxAnight,dcollectedg7$Global_active_power[daycounter]) # Finds max for night
       }
       
     }else{
       
       if(weekendmaxAday < dcollectedg7$Global_active_power[daycounter]){
-        weekendmaxAday = max(weekendmaxAday,dcollectedg7$Global_active_power[daycounter])
+        weekendmaxAday = max(weekendmaxAday,dcollectedg7$Global_active_power[daycounter]) # Finds max for day
       }
     }
 
@@ -124,27 +97,10 @@ for(x in dcollectedg7$Date){
   }
 }
 
+# Printing
 print("WEEKENDMAXA")
 print(paste("Day ", weekendmaxAday))
 print(paste("Night ",weekendmaxAnight))
-# 
-# 
-# weekendminA = weekendmaxA
-# daycounter = 7200
-# for(x in dcollectedg7$Date){
-#   if(x == "17/2/2007" || x == "18/2/2007"){
-#     daycounter = daycounter + 1
-#     if(weekendminA > dcollectedg7$Global_active_power[daycounter]){
-#       weekendminA = min(weekendminA,dcollectedg7$Global_active_power[daycounter])
-#     }
-#     
-#   }
-# }
-# print("WEEKENDMINA")
-# print(weekendminA)
-# 
-
-
 
 
 weekendminAday = weekendmaxAday
@@ -299,9 +255,9 @@ for(x in dcollectedg7$Date){
       }
     }
     
-    
   }
 }
+
 print("WEEKENDMINB")
 print(paste("Day ",weekendminBday))
 print(paste("Night ", weekendminBnight))
@@ -327,8 +283,8 @@ for(x in dcollectedg7$Date){
       weekdaymaxBday = max(weekdaymaxBday,dcollectedg7$Global_reactive_power[daycounter])
     }
   }
-    if(x == "17/2/2007"){
-      break
+    if(x == "17/2/2007"){ # Reaches the weekend
+      break 
     }
 }
 
@@ -428,22 +384,40 @@ f_corr_g =cor(dcollectedg7$Sub_metering_2,dcollectedg7$Sub_metering_3)
 
 g_corr_g =cor(dcollectedg7$Sub_metering_3,dcollectedg7$Sub_metering_3)
 
-cor_list = c(a_corr_a,a_corr_b, a_corr_c,a_corr_d,a_corr_e,a_corr_f,a_corr_g,
-                b_corr_b,b_corr_c, b_corr_d, b_corr_e,b_corr_f,b_corr_g,
-                c_corr_c, c_corr_d,c_corr_e,c_corr_f,c_corr_g,
-                d_corr_d,d_corr_e,d_corr_f,d_corr_g,
-                e_corr_e,e_corr_f,e_corr_g,
-                f_corr_f,f_corr_g,
-                g_corr_g)
 
 
-# data(cor_list)
-# textm2 = matrix(cor_list, 7,7)
-# 
-# testvar = round(cor(textm2),1)
-# 
-# 
-# ggcorrplot(testvar,method = "square", "full", lab = TRUE)
-# 
 
+
+
+# TESTING STUFF. SKIP OVER
+
+# cor_list = list(a_corr_a,a_corr_b, a_corr_c,a_corr_d,a_corr_e,a_corr_f,a_corr_g,
+#                 b_corr_b,b_corr_c, b_corr_d, b_corr_e,b_corr_f,b_corr_g,
+#                 c_corr_c, c_corr_d,c_corr_e,c_corr_f,c_corr_g,
+#                 d_corr_d,d_corr_e,d_corr_f,d_corr_g,
+#                 e_corr_e,e_corr_f,e_corr_g,
+#                 f_corr_f,f_corr_g,
+#                 g_corr_g)
+
+
+
+# # frow = c(a_corr_a,a_corr_b, a_corr_c,a_corr_d,a_corr_e,a_corr_f,a_corr_g)
+# # srow = c(b_corr_b,b_corr_c, b_corr_d, b_corr_e,b_corr_f,b_corr_g)
+# # trow = c(c_corr_c, c_corr_d,c_corr_e,c_corr_f,c_corr_g)
+# # forow = c(d_corr_d,d_corr_e,d_corr_f,d_corr_g)
+# # firow = c(e_corr_e,e_corr_f,e_corr_g)
+# # sirow = c(f_corr_f,f_corr_g)
+# # serow = c(g_corr_g)
+# 
+# test = as.matrix(cor_list)
+# corrplot(test)
+# # data(cor_list)
+# # textm2 = matrix(cor_list, 7,7)
+# # 
+# # testvar = round(cor(textm2),1)
+# # 
+# # 
+# # ggcorrplot(testvar,method = "square", "full", lab = TRUE)
+# # 
+# 
 
