@@ -106,8 +106,11 @@ for(i in 1:length(vd1)){
 }
 
 
+fit_linear <- lm(y ~ x, use1)
+plot(fit_linear)
 
-//
+
+
 
 
 
@@ -156,15 +159,13 @@ print(sdC)
 # bool -> FALSE
 # 18:01:00 #Night
 
-// part3
-
-//1. weekdays
 
 
 
 
 
-//
+
+
 
 print("FOR A (Global_active_power)")
 
