@@ -22,101 +22,6 @@ print(meanA)
 print(meanB)
 print(meanC)
 
-date = dcollectedg7$Date
-time = dcollectedg7$Time
-intensity = dcollectedg7$Global_intensity
-
-start = "07:30:00"
-end =   "12:30:00"
-vd1 = c()
-vd2 = c()
-vd3 = c()
-vd4 = c()
-vd5 = c()
- 
-vd6 = c()
-vd7 = c()
-
-k1=1
-k2=1
-k3=1
-k4=1
-k5=1
-
-k6=1
-k7=1
-
-for(i in 1:length(date)){
-    if(date[i] == "12/2/2007"){
-        if((strptime(time[i],"%H:%M:%S") >= strptime(start,"%H:%M:%S")) && (strptime(time[i],"%H:%M:%S") <= strptime(end,"%H:%M:%S"))){
-            vd1[k1] <- intensity[i]
-            k1=k1+1
-        }
-    }
-    if(date[i] == "13/2/2007"){
-        if((strptime(time[i],"%H:%M:%S") >= strptime(start,"%H:%M:%S")) && (strptime(time[i],"%H:%M:%S") <= strptime(end,"%H:%M:%S"))){
-            vd2[k2] <- intensity[i]
-            k2=k2+1
-        }
-    }
-    if(date[i] == "14/2/2007"){
-        if((strptime(time[i],"%H:%M:%S") >= strptime(start,"%H:%M:%S")) && (strptime(time[i],"%H:%M:%S") <= strptime(end,"%H:%M:%S"))){
-            vd3[k3] <- intensity[i]
-            k3=k3+1
-        }
-    }
-    if(date[i] == "15/2/2007"){
-        if((strptime(time[i],"%H:%M:%S") >= strptime(start,"%H:%M:%S")) && (strptime(time[i],"%H:%M:%S") <= strptime(end,"%H:%M:%S"))){
-            vd4[k4] <- intensity[i]
-            k4=k4+1
-        }
-    }
-    if(date[i] == "16/2/2007"){
-        if((strptime(time[i],"%H:%M:%S") >= strptime(start,"%H:%M:%S")) && (strptime(time[i],"%H:%M:%S") <= strptime(end,"%H:%M:%S"))){
-            vd5[k5] <- intensity[i]
-            k5=k5+1
-        }
-    }
-    if(date[i] == "17/2/2007"){
-        if((strptime(time[i],"%H:%M:%S") >= strptime(start,"%H:%M:%S")) && (strptime(time[i],"%H:%M:%S") <= strptime(end,"%H:%M:%S"))){
-            vd6[k6] <- intensity[i]
-            k6=k6+1
-        }
-    }
-    if(date[i] == "18/2/2007"){
-        if((strptime(time[i],"%H:%M:%S") >= strptime(start,"%H:%M:%S")) && (strptime(time[i],"%H:%M:%S") <= strptime(end,"%H:%M:%S"))){
-            vd7[k7] <- intensity[i]
-            k7=k7+1
-        }
-    }
-
-
-
-
-
-}
-use1 = c()
-use2 = c()
-for(i in 1:length(vd1)){
-    x<- c(vd1[i],vd2[i],vd3[i],vd4[i],vd5[i])
-    y<- c(vd6[i],vd7[i])
-    use1[i] = mean(x)
-    use2[i] = mean(y)
-    
-}
-
-
-fit_linear <- lm(y ~ x, use1)
-plot(fit_linear)
-
-
-
-
-
-
-#fit_linear <- lm(y ~ x, use1)
-
-
 
 # Geometric mean calculations 
 
@@ -158,11 +63,6 @@ print(sdC)
 # 18:00:00 #Day
 # bool -> FALSE
 # 18:01:00 #Night
-
-
-
-
-
 
 
 
@@ -484,6 +384,124 @@ f_corr_f =cor(dcollectedg7$Sub_metering_2,dcollectedg7$Sub_metering_2)
 f_corr_g =cor(dcollectedg7$Sub_metering_2,dcollectedg7$Sub_metering_3)
 
 g_corr_g =cor(dcollectedg7$Sub_metering_3,dcollectedg7$Sub_metering_3)
+
+
+
+
+# PART 3
+
+date = dcollectedg7$Date
+time = dcollectedg7$Time
+intensity = dcollectedg7$Global_intensity
+
+start = "07:30:00"
+end =   "12:30:00"
+vd1 = c()
+vd2 = c()
+vd3 = c()
+vd4 = c()
+vd5 = c()
+
+vd6 = c()
+vd7 = c()
+
+k1=1
+k2=1
+k3=1
+k4=1
+k5=1
+
+k6=1
+k7=1
+
+for(i in 1:length(date)){
+  if(date[i] == "12/2/2007"){
+    if((strptime(time[i],"%H:%M:%S") >= strptime(start,"%H:%M:%S")) && (strptime(time[i],"%H:%M:%S") <= strptime(end,"%H:%M:%S"))){
+      vd1[k1] <- intensity[i]
+      k1=k1+1
+    }
+  }
+  if(date[i] == "13/2/2007"){
+    if((strptime(time[i],"%H:%M:%S") >= strptime(start,"%H:%M:%S")) && (strptime(time[i],"%H:%M:%S") <= strptime(end,"%H:%M:%S"))){
+      vd2[k2] <- intensity[i]
+      k2=k2+1
+    }
+  }
+  if(date[i] == "14/2/2007"){
+    if((strptime(time[i],"%H:%M:%S") >= strptime(start,"%H:%M:%S")) && (strptime(time[i],"%H:%M:%S") <= strptime(end,"%H:%M:%S"))){
+      vd3[k3] <- intensity[i]
+      k3=k3+1
+    }
+  }
+  if(date[i] == "15/2/2007"){
+    if((strptime(time[i],"%H:%M:%S") >= strptime(start,"%H:%M:%S")) && (strptime(time[i],"%H:%M:%S") <= strptime(end,"%H:%M:%S"))){
+      vd4[k4] <- intensity[i]
+      k4=k4+1
+    }
+  }
+  if(date[i] == "16/2/2007"){
+    if((strptime(time[i],"%H:%M:%S") >= strptime(start,"%H:%M:%S")) && (strptime(time[i],"%H:%M:%S") <= strptime(end,"%H:%M:%S"))){
+      vd5[k5] <- intensity[i]
+      k5=k5+1
+    }
+  }
+  if(date[i] == "17/2/2007"){
+    if((strptime(time[i],"%H:%M:%S") >= strptime(start,"%H:%M:%S")) && (strptime(time[i],"%H:%M:%S") <= strptime(end,"%H:%M:%S"))){
+      vd6[k6] <- intensity[i]
+      k6=k6+1
+    }
+  }
+  if(date[i] == "18/2/2007"){
+    if((strptime(time[i],"%H:%M:%S") >= strptime(start,"%H:%M:%S")) && (strptime(time[i],"%H:%M:%S") <= strptime(end,"%H:%M:%S"))){
+      vd7[k7] <- intensity[i]
+      k7=k7+1
+    }
+  }
+  
+  
+  
+  
+}
+use1 = c()
+use2 = c()
+for(i in 1:length(vd1)){
+  x<- c(vd1[i],vd2[i],vd3[i],vd4[i],vd5[i])
+  y<- c(vd6[i],vd7[i])
+  use1[i] = mean(x)
+  use2[i] = mean(y)
+  
+}
+
+
+k <- 1 : length(use1)
+fit_linear <-lm(use1~k)  #weekdays
+fit_linear2 <- lm(use2~k)  #weekends
+
+fit_polynomial <- lm(use1 ~ poly(k,2,raw=TRUE)) #weekdays
+fit_polynomial2 <- lm(use2 ~ poly(k,2,raw=TRUE))  #weekends
+
+plot(use1~k, xlab="time",ylab="Global Intestiy", main = "WeekDays")
+abline(fit_linear, xlab="time",ylab="Global Intestiy", main = "WeekDays")
+
+
+plot(use2~k, xlab="time",ylab="Global Intestiy", main = "WeekEnds")
+abline(fit_linear2, xlab="time",ylab="Global Intestiy", main = "WeekEnds")
+
+
+plot(use1~k, xlab="time",ylab="Global Intestiy", main = "WeekDays")
+abline(fit_polynomial, xlab="time",ylab="Global Intestiy", main = "WeekDays")
+
+
+plot(use2~k, xlab="time",ylab="Global Intestiy", main = "WeekEnds")
+abline(fit_polynomial2, xlab="time",ylab="Global Intestiy", main = "WeekEnds")
+
+
+
+#plot(fit_linear, type = "p", main = "linear regression")
+
+
+
+#fit_linear <- lm(y ~ x, use1)
 
 
 
